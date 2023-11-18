@@ -21,12 +21,10 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       (event, emit) async {
         emit(state.copyWith(status: ProductsStateStatus.loading));
         try {
-          log('tesssss');
           final result = await productUseCase.getProductList(
             searchText: state.searchText,
             page: state.page,
           );
-          log('tesssss ${result.right}');
           if (result.isRight) {
             emit(
               state.copyWith(
@@ -46,7 +44,6 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
             ));
           }
         } catch (error, stackTrace) {
-          log('masuk_sini_error');
           log(stackTrace.toString(),
               stackTrace: stackTrace, error: error, name: 'ERROR');
           emit(state.copyWith(status: ProductsStateStatus.failure));
